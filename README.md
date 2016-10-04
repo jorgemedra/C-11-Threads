@@ -33,9 +33,9 @@ This sample shows how to:
 The Test Class has two methods `procA` and `procA`. These methods will be executes by different thread, called `std::thread *A` and `std::thread *B`. These methods have the same input parameters (`string name`) and the same return type (`void`).
 
 ```c++
+
 void procA(string name);
 void procB(string name);
-
 
 ```
 
