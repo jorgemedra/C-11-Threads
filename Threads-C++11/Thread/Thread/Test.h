@@ -21,9 +21,9 @@
 using namespace std;
 
 
-class Test {
+class TestA {
 
-	typedef void (Test::*PTRP) (string);
+	typedef void (TestA::*PTRP) (string);
 
 	PTRP ptrPA;
 	PTRP ptrPB;
@@ -40,10 +40,10 @@ class Test {
 	std::thread *B = NULL;
 
 public:
-	static void EntryPoint(Test*, PTRP, string);
+	static void EntryPoint(TestA*, PTRP, string);
 
-	Test();
-	virtual ~Test();
+	TestA();
+	virtual ~TestA();
 
 	void start();
 	void stop();
@@ -60,4 +60,37 @@ public:
 
 };
 
+
+class TestB {
+
+	mutex mtx_l;
+
+	std::mutex mtx_a;
+	std::condition_variable cv_a;
+
+	mutex mtx_b;
+	std::condition_variable cv_b;
+
+	std::thread *A = NULL;
+	std::thread *B = NULL;
+
+public:
+
+	TestB();
+	virtual ~TestB();
+
+	void start();
+	void stop();
+
+	void printLog(string msg);
+
+	void resumePA();
+	void resumePB();
+
+	void procA(string name);
+	void procB(string name);
+
+
+
+};
 #endif /* TEST_H_ */

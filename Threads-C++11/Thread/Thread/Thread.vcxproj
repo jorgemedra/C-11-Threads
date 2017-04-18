@@ -170,14 +170,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TestA.cpp" />
+    <ClCompile Include="TestB.cpp" />
     <ClCompile Include="Test_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.MD" />
+    <None Include="..\..\README.MD" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

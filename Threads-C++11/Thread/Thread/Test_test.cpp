@@ -16,20 +16,36 @@ int main(int argc, char* args[])
 
 	std::cout << "Press Enter to resume" << endl;
 
-	Test *app = new Test();
-	app->start();
+	TestA *appA = new TestA();
+	TestB *appB = new TestB();
+
+	appA->start();
+	appB->start();
+
 	cin.getline(line, 256);
 
-	if(line[0] == 'A' || line[0] == 'a')
-		app->resumePA();
+	if (line[0] == 'A' || line[0] == 'a')
+	{
+		appA->resumePA();
+		appB->resumePA();
+	}
 	else
-		app->resumePB();
+	{
+		appA->resumePB();
+		appB->resumePB();
+	}
 
-	std::cout << "Press Enter to finish" << endl;
-	cin.getline(line, 256);
+	//std::cout << "Press Enter to finish" << endl;
+	//cin.getline(line, 256);
+	system("Pause");
 
-	app->stop();
+	appA->stop();
+	appB->stop();
 
-	delete app;
+	delete appA;
+	delete appB;
+
+	system("Pause");
+
 	return 0;
 }
