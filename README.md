@@ -315,3 +315,42 @@ void Test::printLog(string msg)
 
 }
 ```
+
+# UPGRADRE: 18-Mach.2017
+
+> This code was modified to show how to execute a thread over a Class Method, first with a static method as EntryPoint (Original Way) and the second way (Updated) using the C++11 functionality **std::bind** to wrap the class method and use it with **std::thread**.
+
++ The Class `Test` chaged to `TestA` and its code has no changed.
++ There is a new class called `TestB` that do se same thinks than `TestA`, but its method `start` create the threads with `std::bind`.
++ The class `TestB` does not use a prototype of pointer to function as `TestA` uses, like: `typedef void (TestA::*PTRP) (string)`.
+
+So, the new class `TestB` create its threads like follow:
+
+```c++
+    if (A == NULL)
+	{
+		auto fTA = std::bind(&TestB::procA, this, placeholders::_1);
+		auto fTB = std::bind(&TestB::procB, this, placeholders::_1);
+
+		A = new std::thread(fTA, nameA);
+		B = new std::thread(fTB, nameB);
+	}
+```
+
+The main difference between both ways is their Call Stack, because the treads of `TestA` have into their stacks the called of *EntryPoint* meanwhile threads of class `TestB` are directly invoked. 
+
+**Call Stack for `TestA`, using a static *EntryPoint*:**
+
+```
+Thread.exe!TestA::procA(std::basic_string<char,std::char_traits<char>,std::allocator<char> > name) Line 73	C++
+Thread.exe!TestA::EntryPoint(TestA * obj, void(TestA::*)(std::basic_string<char,std::char_traits<char>,std::allocator<char> >) ptr, std::basic_string<char,std::char_traits<char>,std::allocator<char> > name) Line 26	C++
+```
+
+**Call Stack for `TestB`, using `std::bind`:**
+
+```
+Thread.exe!TestB::procA(std::basic_string<char,std::char_traits<char>,std::allocator<char> > name) Line 67	C++
+```
+
+
+The class `TestB`´remove the static EntryPoint to execute the thread over the class method and substituted it with `std::bind` that works as a wrappert that use the `thread` class to invoke the method over the new thread. So, in this way, `TestB` code is smaller and easier to undertand than `TestA`.
